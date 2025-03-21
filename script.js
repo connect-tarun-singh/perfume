@@ -82,7 +82,7 @@ function resetGame() {
   frame = 0;
   score = 0;
   gameOver = false;
-  gameStarted = false;
+  gameStarted = true;
 
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -91,15 +91,19 @@ function resetGame() {
   document.getElementById('score').textContent = `Score: 0`;
   document.getElementById('discount').textContent = '';
 
-  // Stop the current game loop
+  // Stop the current game loop (if running)
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
   }
+
+  // Start the game loop
+  gameLoop();
 }
 
 function gameLoop() {
   if (gameOver) {
     drawDiscount();
+    gameStarted = false; // Allow the game to be restarted
     return;
   }
 
@@ -117,13 +121,10 @@ function gameLoop() {
 
 playButton.addEventListener('click', () => {
   if (!gameStarted) {
-    resetGame(); // Reset the game state
-    gameStarted = true; // Mark the game as started
-    gameLoop(); // Start the game loop
+    resetGame(); // Reset and start the game
   }
 });
 
 document.addEventListener('keydown', () => {
   if (gameStarted && !gameOver) bird.velocity = bird.lift;
 });
-

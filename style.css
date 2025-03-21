@@ -164,7 +164,37 @@ canvas {
   background-color: #3E2723;
 }
 
+/* Make the game section responsive */
+.game {
+  padding: 20px 0;
+  text-align: center;
+  background-color: #E8E8E8;
+}
 
+canvas {
+  border: 2px solid #5C3D2E;
+  border-radius: 10px;
+  background-color: #FFF;
+  margin: 20px auto;
+  display: block;
+  max-width: 100%; /* Ensure canvas doesn't overflow on small screens */
+  height: auto; /* Maintain aspect ratio */
+}
+
+#playButton {
+  margin-bottom: 20px;
+  background-color: #5C3D2E;
+  color: #FFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#playButton:hover {
+  background-color: #3E2723;
+}
 
 /* Footer Styles */
 footer {

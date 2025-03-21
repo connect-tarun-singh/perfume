@@ -149,6 +149,22 @@ canvas {
   color: #3E2723;
   font-weight: bold;
 }
+#playButton {
+  margin-bottom: 20px;
+  background-color: #5C3D2E;
+  color: #FFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#playButton:hover {
+  background-color: #3E2723;
+}
+
+
 
 /* Footer Styles */
 footer {

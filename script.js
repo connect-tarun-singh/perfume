@@ -128,3 +128,28 @@ playButton.addEventListener('click', () => {
 document.addEventListener('keydown', () => {
   if (gameStarted && !gameOver) bird.velocity = bird.lift;
 });
+
+// Add touch event for mobile devices
+document.addEventListener('touchstart', () => {
+  if (gameStarted && !gameOver) bird.velocity = bird.lift;
+});
+// Set canvas size based on device width
+function setCanvasSize() {
+  const maxWidth = 320; // Maximum width for the game
+  const maxHeight = 480; // Maximum height for the game
+
+  // Adjust canvas size for smaller screens
+  if (window.innerWidth < maxWidth) {
+    canvas.width = window.innerWidth - 40; // Leave some padding
+    canvas.height = (window.innerWidth - 40) * (maxHeight / maxWidth); // Maintain aspect ratio
+  } else {
+    canvas.width = maxWidth;
+    canvas.height = maxHeight;
+  }
+}
+
+// Call the function to set initial canvas size
+setCanvasSize();
+
+// Update canvas size when the window is resized
+window.addEventListener('resize', setCanvasSize);

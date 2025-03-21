@@ -7,7 +7,7 @@ const canvas = document.getElementById('flappyBird');
 const ctx = canvas.getContext('2d');
 const playButton = document.getElementById('playButton');
 
-let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.1, lift: -5, velocity: 0 };
+let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.6, lift: -10, velocity: 0 };
 let pipes = [];
 let frame = 0;
 let score = 0;

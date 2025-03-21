@@ -13,6 +13,7 @@ let frame = 0;
 let score = 0;
 let gameOver = false;
 let gameStarted = false;
+let animationFrameId;
 
 function drawBird() {
   ctx.fillStyle = '#5C3D2E';
@@ -74,15 +75,26 @@ function drawDiscount() {
 }
 
 function resetGame() {
+  // Reset game state
   bird.y = 150;
   bird.velocity = 0;
   pipes = [];
   frame = 0;
   score = 0;
   gameOver = false;
+  gameStarted = false;
+
+  // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Reset score and discount display
   document.getElementById('score').textContent = `Score: 0`;
   document.getElementById('discount').textContent = '';
+
+  // Stop the current game loop
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
 }
 
 function gameLoop() {
@@ -100,17 +112,18 @@ function gameLoop() {
   drawScore();
 
   frame++;
-  requestAnimationFrame(gameLoop);
+  animationFrameId = requestAnimationFrame(gameLoop);
 }
 
 playButton.addEventListener('click', () => {
   if (!gameStarted) {
-    resetGame();
-    gameStarted = true;
-    gameLoop();
+    resetGame(); // Reset the game state
+    gameStarted = true; // Mark the game as started
+    gameLoop(); // Start the game loop
   }
 });
 
 document.addEventListener('keydown', () => {
   if (gameStarted && !gameOver) bird.velocity = bird.lift;
 });
+

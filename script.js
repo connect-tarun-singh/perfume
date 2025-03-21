@@ -5,21 +5,14 @@ document.querySelector('.btn').addEventListener('click', () => {
 // Flappy Bird Game
 const canvas = document.getElementById('flappyBird');
 const ctx = canvas.getContext('2d');
+const playButton = document.getElementById('playButton');
 
-let bird = {
-  x: 50,
-  y: 150,
-  width: 20,
-  height: 20,
-  gravity: 0.6,
-  lift: -10,
-  velocity: 0
-};
-
+let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.6, lift: -10, velocity: 0 };
 let pipes = [];
 let frame = 0;
 let score = 0;
 let gameOver = false;
+let gameStarted = false;
 
 function drawBird() {
   ctx.fillStyle = '#5C3D2E';
@@ -80,6 +73,18 @@ function drawDiscount() {
   document.getElementById('discount').textContent = `You earned a ${discount}% discount!`;
 }
 
+function resetGame() {
+  bird.y = 150;
+  bird.velocity = 0;
+  pipes = [];
+  frame = 0;
+  score = 0;
+  gameOver = false;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  document.getElementById('score').textContent = `Score: 0`;
+  document.getElementById('discount').textContent = '';
+}
+
 function gameLoop() {
   if (gameOver) {
     drawDiscount();
@@ -98,8 +103,14 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
-document.addEventListener('keydown', () => {
-  if (!gameOver) bird.velocity = bird.lift;
+playButton.addEventListener('click', () => {
+  if (!gameStarted) {
+    resetGame();
+    gameStarted = true;
+    gameLoop();
+  }
 });
 
-gameLoop();
+document.addEventListener('keydown', () => {
+  if (gameStarted && !gameOver) bird.velocity = bird.lift;
+});

@@ -2,18 +2,14 @@
 document.querySelector('.btn').addEventListener('click', () => {
   alert('Added to Cart!');
 });
-// Flappy Bird Game
-// Flappy Bird Game
+
+// flappy 
 const canvas = document.getElementById('flappyBird');
 const ctx = canvas.getContext('2d');
 const playButton = document.getElementById('playButton');
-const startScreen = document.getElementById('startScreen');
-const gameOverScreen = document.getElementById('gameOverScreen');
-const restartButton = document.getElementById('restartButton');
 const scoreDisplay = document.getElementById('score');
 const discountDisplay = document.getElementById('discount');
 
-// Game Variables
 let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.6, lift: -10, velocity: 0 };
 let pipes = [];
 let frame = 0;
@@ -22,18 +18,14 @@ let gameOver = false;
 let gameStarted = false;
 let animationFrameId;
 
-// Sound Effects (uncomment and add sound files to use)
-// const flapSound = new Audio('flap.mp3');
-// const gameOverSound = new Audio('gameover.mp3');
-
 // Set Canvas Size
 function setCanvasSize() {
-  const maxWidth = 320; // Maximum width for the game
-  const maxHeight = 480; // Maximum height for the game
+  const maxWidth = 320;
+  const maxHeight = 480;
 
   if (window.innerWidth < maxWidth) {
-    canvas.width = window.innerWidth - 40; // Leave some padding
-    canvas.height = (window.innerWidth - 40) * (maxHeight / maxWidth); // Maintain aspect ratio
+    canvas.width = window.innerWidth - 40;
+    canvas.height = (window.innerWidth - 40) * (maxHeight / maxWidth);
   } else {
     canvas.width = maxWidth;
     canvas.height = maxHeight;
@@ -60,10 +52,8 @@ function updateBird() {
   bird.velocity += bird.gravity;
   bird.y += bird.velocity;
 
-  // Check for collision with ground or sky
   if (bird.y + bird.height > canvas.height || bird.y < 0) {
     gameOver = true;
-    // if (gameOverSound) gameOverSound.play();
   }
 }
 
@@ -78,22 +68,18 @@ function updatePipes() {
   pipes.forEach(pipe => {
     pipe.x -= 2;
 
-    // Check for collision with bird
     if (bird.x < pipe.x + pipe.width &&
         bird.x + bird.width > pipe.x &&
         (bird.y < pipe.top || bird.y + bird.height > canvas.height - pipe.bottom)) {
       gameOver = true;
-      // if (gameOverSound) gameOverSound.play();
     }
 
-    // Increase score if pipe is passed
     if (pipe.x + pipe.width < bird.x && !pipe.passed) {
       score++;
       pipe.passed = true;
     }
   });
 
-  // Remove off-screen pipes
   pipes = pipes.filter(pipe => pipe.x + pipe.width > 0);
 }
 
@@ -104,12 +90,13 @@ function drawScore() {
 
 // Draw Discount
 function drawDiscount() {
-  let discount = Math.min(score * 5, 50); // Max discount of 50%
+  let discount = Math.min(score * 5, 50);
   discountDisplay.textContent = `You earned a ${discount}% discount!`;
 }
 
 // Reset Game
 function resetGame() {
+  console.log("Game reset!"); // Debugging
   bird.y = 150;
   bird.velocity = 0;
   pipes = [];
@@ -126,8 +113,6 @@ function resetGame() {
     cancelAnimationFrame(animationFrameId);
   }
 
-  startScreen.style.display = 'none';
-  gameOverScreen.style.display = 'none';
   gameLoop();
 }
 
@@ -135,7 +120,6 @@ function resetGame() {
 function gameLoop() {
   if (gameOver) {
     drawDiscount();
-    gameOverScreen.style.display = 'block';
     gameStarted = false;
     return;
   }
@@ -154,27 +138,18 @@ function gameLoop() {
 
 // Event Listeners
 playButton.addEventListener('click', () => {
+  console.log("Play button clicked!"); // Debugging
   if (!gameStarted) {
     resetGame();
   }
 });
 
-restartButton.addEventListener('click', () => {
-  resetGame();
-});
-
 document.addEventListener('keydown', () => {
-  if (gameStarted && !gameOver) {
-    bird.velocity = bird.lift;
-    // if (flapSound) flapSound.play();
-  }
+  if (gameStarted && !gameOver) bird.velocity = bird.lift;
 });
 
 document.addEventListener('touchstart', () => {
-  if (gameStarted && !gameOver) {
-    bird.velocity = bird.lift;
-    // if (flapSound) flapSound.play();
-  }
+  if (gameStarted && !gameOver) bird.velocity = bird.lift;
 });
 
 // Set initial canvas size
